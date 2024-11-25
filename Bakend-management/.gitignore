@@ -1,4 +1,15 @@
-node_modules
-dist
-dist-ssr
+
+# Ignore node_modules folder
+node_modules/
+
+# Ignore dist folder (compiled TypeScript output)
+dist/
+
+# Ignore dist-ssr folder (SSR output, if applicable)
+dist-ssr/
+
+# Ignore .local files (e.g., editor/IDE-specific files)
 *.local
+
+# Ignore .env files (environment variable files)
+.env
