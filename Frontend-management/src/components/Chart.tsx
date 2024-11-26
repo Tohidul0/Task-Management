@@ -9,13 +9,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
-// Importing chart data with a proper TypeScript type
 import { chartData } from "../assets/data";
 
 // Define the type for the chart data
 interface ChartData {
-  name: string; // Replace with the correct type of 'name' if it's not a string
+  name: string;
   total: number; // Replace with the correct type of 'total' if it's not a number
 }
 

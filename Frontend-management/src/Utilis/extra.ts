@@ -24,8 +24,8 @@ export const formatDate = (date : any) => {
     return formattedDate;
   }
   
-  export function getInitials(fullName : any) {
-    const names : any = fullName.split(" ");
+  export function getInitials(fullName : string) {
+    const names  = fullName.split(" ");
   
     const initials = names.slice(0, 2).map((name :any) => name[0].toUpperCase());
   
@@ -40,7 +40,7 @@ export const formatDate = (date : any) => {
     low: "text-blue-600",
   };
   
-  export const TASK_TYPE = {
+  export const TASK_TYPE  = {
     todo: "bg-blue-600",
     "in progress": "bg-yellow-600",
     completed: "bg-green-600",

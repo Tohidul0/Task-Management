@@ -11,6 +11,8 @@ import { RootState } from "./redux/store";
 import clsx from "clsx";
 import { setOpenSidebar } from './redux/slices/authSlice';
 import Dashboard from './pages/Dashboard';
+import Tasks from './pages/Tasks';
+// import Tasks from './pages/Tasks';
 
 function Layout() {
   const { user } = useSelector((state : any) => state.auth);
@@ -95,7 +97,7 @@ const MobileSidebar = () => {
 };
 
 
-const App: React.FC = () => {
+const App = () => {
   
 
 
@@ -105,6 +107,7 @@ const App: React.FC = () => {
          <Route element={<Layout />}>
             <Route index path='/' element={<Navigate to='/dashboard' />} />
             <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/tasks' element={<Tasks />} />
          </Route>
             <Route path='/log-in' element={<Login />} />
       </Routes>

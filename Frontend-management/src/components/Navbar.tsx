@@ -3,6 +3,8 @@ import { MdOutlineSearch } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store"; // Assuming you have these types set up
 import { setOpenSidebar } from "../redux/slices/authSlice";
+import NotificationPanel from "./NotificationPanel";
+import UserAvatar from "./UserAvatar";
 // import UserAvatar from "./UserAvatar";
 // import NotificationPanel from "./NotificationPanel";
 
@@ -32,9 +34,9 @@ const Navbar: React.FC = () => {
       </div>
 
       <div className="flex gap-2 items-center">
-        {/* <NotificationPanel />
+        <NotificationPanel />
 
-        <UserAvatar /> */}
+        <UserAvatar /> 
       </div>
     </div>
   );

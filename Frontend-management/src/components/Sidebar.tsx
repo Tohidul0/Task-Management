@@ -66,7 +66,7 @@ interface RootState {
   };
 }
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const location = useLocation();
