@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/tasks:
+ * /tasks:
  *   post:
  *     summary: Create a new task
  *     description: This endpoint creates a new task by providing the title, description, priority, and assigned user.
@@ -69,7 +69,7 @@ router.post("/", authenticate, createTask);
 
 /**
  * @swagger
- * /api/tasks:
+ * /tasks:
  *   get:
  *     summary: Get all tasks
  *     description: This endpoint retrieves all tasks from the database.
