@@ -1,88 +1,50 @@
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store"; // Adjust the path to your store
-
 import axios from "axios";
-import { setCredentials } from "../redux/slices/authSlice";
-import { AppDispatch } from "../redux/store";
-import { Line } from "recharts";
 import { Link } from "react-router-dom";
 
-interface LoginFormInputs {
-  email: string;
-  password: string;
-}
-interface SignInResponse {
-  success: string;
-  message?: string;
-  [key: string]: any;
-}
-interface User {
-  _id: string;
+interface RegisterFormInputs {
   name: string;
   email: string;
+  password: string;
+  role: string;
+  title: string;
 }
 
-const Login: React.FC = () => {
-  // Selector with type safety
-  const { user } = useSelector((state: RootState) => state.auth);
-  //console.log(user, 1000);
-  const dispatch = useDispatch<AppDispatch>();
-
+const Register: React.FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormInputs>();
-
+  } = useForm<RegisterFormInputs>();
   const navigate = useNavigate();
 
   // Form submission handler
-  const submitHandler: SubmitHandler<LoginFormInputs> = async (data: any) => {
+  const submitHandler: SubmitHandler<RegisterFormInputs> = async (data) => {
     console.log("Submitted Data:", data);
 
-    // Add your login logic here
     try {
-      const res = await axios.post<SignInResponse>(
-        `http://localhost:3000/api/auth/login`,
-        data, // Axios automatically converts objects to JSON
+      const res = await axios.post(
+        `http://localhost:3000/api/auth/register`, // Adjust the endpoint as needed
+        data,
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true, 
+          withCredentials: true,
         }
       );
 
-      if (res.data.success === "false") {
-        window.alert("Log In failed!!!");
-      } else if (res.data.user) {
-        // Transform SignInResponse.user to User
-        const user: User = {
-          _id: res.data.user._id,
-          name: res.data.user.name,
-          email: res.data.user.email,
-          role : res.data.user.role,
-          isActive: res.data.user.isActive,
-          isAdmin : res.data.user.isAdmin,
-           createdAt: res.data.user.createdAt,
-        };
-        localStorage.setItem("token", res.data.token);
-
-        // Dispatch the transformed User
-        dispatch(setCredentials(user));
-        navigate("/");
+      if (res.status === 201 && res.data.message === "success") {
+        window.alert("Registration successful! Redirecting to login...");
+        navigate("/log-in"); // Redirect to login page
       } else {
-        window.alert("Unexpected response from the server!");
+        window.alert( "Registration failed!");
       }
     } catch (error: unknown) {
       console.error("An error occurred:", error);
+      window.alert("An error occurred during registration.");
     }
   };
-
-  useEffect(() => {
-    if (user) navigate("/dashboard");
-  }, [user, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-orange-50 via-white to-orange-100">
@@ -91,16 +53,15 @@ const Login: React.FC = () => {
         <div className="lg:w-1/2 flex flex-col items-start">
           <div className="flex flex-col gap-6">
             <span className="inline-block bg-orange-100 text-orange-700 text-sm font-medium py-1 px-4 rounded-full">
-              Simplify your workflow!
+              Join the community!
             </span>
             <h1 className="text-4xl md:text-5xl font-extrabold text-orange-800 leading-tight">
               Smart <br />
               <span className="text-orange-600">Task Management</span>
             </h1>
             <p className="text-gray-700 text-base md:text-lg">
-              Organize your tasks, boost your productivity, and achieve your
-              goals with ease. Experience seamless collaboration and streamlined
-              task handling.
+              Create an account to organize your tasks, boost productivity, and
+              achieve your goals effortlessly.
             </p>
           </div>
 
@@ -120,11 +81,33 @@ const Login: React.FC = () => {
             {/* Heading */}
             <div>
               <h2 className="text-2xl font-semibold text-orange-700 text-center">
-                Welcome Back!
+                Create Your Account
               </h2>
               <p className="text-center text-gray-600 text-sm">
-                Your journey to organized productivity starts here.
+                Sign up to manage your tasks seamlessly.
               </p>
+            </div>
+
+            {/* Name Field */}
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="name"
+                className="text-gray-700 text-sm font-medium"
+              >
+                Full Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                className="w-full px-4 py-3 border border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                placeholder="Your full name"
+                {...register("name", {
+                  required: "Full Name is required!",
+                })}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-xs">{errors.name.message}</p>
+              )}
             </div>
 
             {/* Email Field */}
@@ -173,26 +156,63 @@ const Login: React.FC = () => {
               )}
             </div>
 
-            {/* Forgot Password */}
-            {/* <div className="text-right">
-              <a href="#" className="text-sm text-orange-600 hover:underline">
-                Forgot Password?
-              </a>
-            </div> */}
+            {/* Role Field */}
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="role"
+                className="text-gray-700 text-sm font-medium"
+              >
+                Role
+              </label>
+              <input
+                id="role"
+                type="text"
+                className="w-full px-4 py-3 border border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                placeholder="Your role (e.g., Developer, Manager)"
+                {...register("role", {
+                  required: "Role is required!",
+                })}
+              />
+              {errors.role && (
+                <p className="text-red-500 text-xs">{errors.role.message}</p>
+              )}
+            </div>
+
+            {/* Title Field */}
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="title"
+                className="text-gray-700 text-sm font-medium"
+              >
+                Title
+              </label>
+              <input
+                id="title"
+                type="text"
+                className="w-full px-4 py-3 border border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                placeholder="Your title (e.g., Senior Developer)"
+                {...register("title", {
+                  required: "Title is required!",
+                })}
+              />
+              {errors.title && (
+                <p className="text-red-500 text-xs">{errors.title.message}</p>
+              )}
+            </div>
 
             {/* Submit Button */}
             <button
               type="submit"
               className="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition duration-200"
             >
-              Login
+              Register
             </button>
           </form>
-          <p><small>Don't have an account? <span className="font-semibold text-orange-700"><Link to='/Sign-Up'>SignUp</Link></span></small></p>
+          <p><small>Have an account allreardy? <span className="font-semibold text-orange-700"><Link to='/log-in'>SignIn</Link></span></small></p>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;

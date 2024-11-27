@@ -1,38 +1,77 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+
 import { User } from "../models/User";
+import { generateToken } from "../utils/jwt";
+import { string } from "zod";
+
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, isAdmin, role, title } = req.body;
+
+    // Check if the user already exists
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+      res.status(400).json({
+        status: false,
+        message: "User already exists",
+      });
+      return;
+    }
+
+    // Hash the password for security
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword });
-    await user.save();
-    res.status(201).json({ message: "User registered successfully." });
+
+    // Create a new user
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword, // Save the hashed password
+      isAdmin,
+      role,
+      title,
+    });
+
+    res.status(201).json({
+      status: true,
+      message: "success"
+      
+    });
+    return;
   } catch (error) {
-    res.status(500).json({ message: "An error occurred.", error });
+    console.error("Error in user registration:", error);
+    res.status(500).json({
+      status: false,
+      message: "Internal Server Error. Please try again.",
+    });
+    return;
   }
 };
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
+    console.log(req.body)
     const user = await User.findOne({ email });
+    console.log(user)
     if (!user) {
       res.status(404).json({ message: "User not found." });
       return;
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log(isMatch)
     if (!isMatch) {
       res.status(401).json({ message: "Invalid credentials." });
       return;
     }
+    console.log("aaaaa")
 
-    const token = jwt.sign({ id: user._id, role: user.role }, "secret", {
-      expiresIn: "1h",
-    });
+    const token : string = await  generateToken(user.email);
+    console.log(token)
+    res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" });
+    
     res.status(200).json({
       token,
       user: {
@@ -40,6 +79,9 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         name: user.name,
         email: user.email,
         role: user.role,
+        isAdmin: user.isAdmin,
+        isActive: user.isActive,
+        createdAt: user.createdAt,
       },
     });
   } catch (error) {

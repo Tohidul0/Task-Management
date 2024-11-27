@@ -12,6 +12,8 @@ import clsx from "clsx";
 import { setOpenSidebar } from './redux/slices/authSlice';
 import Dashboard from './pages/Dashboard';
 import Tasks from './pages/Tasks';
+import Register from './pages/SignUp';
+import Users from './pages/Users';
 // import Tasks from './pages/Tasks';
 
 function Layout() {
@@ -108,8 +110,10 @@ const App = () => {
             <Route index path='/' element={<Navigate to='/dashboard' />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/tasks' element={<Tasks />} />
+            <Route path='/team' element={<Users />} />
          </Route>
             <Route path='/log-in' element={<Login />} />
+            <Route path='/Sign-Up' element={<Register/>} />
       </Routes>
     </main>
   );
