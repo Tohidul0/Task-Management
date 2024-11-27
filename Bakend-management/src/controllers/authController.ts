@@ -8,7 +8,7 @@ import { string } from "zod";
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password, isAdmin, role, title } = req.body;
+    const { name, email, password, isAdmin=false, role, title } = req.body;
 
     // Check if the user already exists
     const userExist = await User.findOne({ email });
