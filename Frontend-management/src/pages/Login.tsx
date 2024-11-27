@@ -7,7 +7,7 @@ import { RootState } from "../redux/store"; // Adjust the path to your store
 import axios from "axios";
 import { setCredentials } from "../redux/slices/authSlice";
 import { AppDispatch } from "../redux/store";
-import { Line } from "recharts";
+
 import { Link } from "react-router-dom";
 
 interface LoginFormInputs {

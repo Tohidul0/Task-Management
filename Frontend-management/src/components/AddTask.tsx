@@ -32,12 +32,29 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen }) => {
   const [team, setTeam] = useState<string[]>([]);
   const [stage, setStage] = useState<string>(LISTS[0]);
   const [priority, setPriority] = useState<string>(PRIORITY[2]);
-  const [assets, setAssets] = useState<File[]>([]);
+  const [assets, setAssets] = useState<string[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setAssets(Array.from(e.target.files));
+      try {
+        setUploading(true);
+        const uploadedFiles = await Promise.all(
+          Array.from(e.target.files).map(async (file) => {
+            const formData = new FormData();
+            formData.append("file", file);
+            const response = await axios.post("/api/upload", formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            });
+            return response.data.url; // Assume API returns the file URL
+          })
+        );
+        setAssets(uploadedFiles);
+      } catch (error) {
+        console.error("Error uploading files:", error);
+      } finally {
+        setUploading(false);
+      }
     }
   };
 
@@ -45,23 +62,24 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen }) => {
     try {
       setUploading(true);
 
-      // Ensure FormData is correctly populated
-      const formData = new FormData();
-      formData.append("title", data.title);
-      formData.append("date", data.date);
-      formData.append("stage", stage.toLowerCase());
-      formData.append("priority", priority.toLowerCase());
+      const task = {
+        title: data.title,
+        date: data.date,
+        stage: stage.toLowerCase(),
+        priority: priority.toLowerCase(),
+        team,
+        assets,
+        activities: [],
+        subTasks: [],
+        isTrashed: false,
+      };
+      console.log(task)
 
-      team.forEach((member) => formData.append("team[]", member));
-      assets.forEach((file) => formData.append("assets[]", file));
-
-      console.log("FormData Entries:", Array.from(formData.entries())); // Debugging log
-
-      // Axios POST request
-      const response = await axios.post("/api/tasks", formData, {
+      const response = await axios.post("http://localhost:3000/api/tasks/", task, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
+        withCredentials: true,
       });
 
       console.log("Task successfully submitted:", response.data);

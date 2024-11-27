@@ -1,5 +1,5 @@
 import express from "express";
-import { createTask, getTasks } from "../controllers/taskController";
+import { createTask } from "../controllers/taskController";
 import { authenticate } from "../middlewares/authMiddleware";
 
 const router = express.Router();
@@ -109,6 +109,6 @@ router.post("/", authenticate, createTask);
  *       500:
  *         description: Internal server error
  */
-router.get("/", authenticate, getTasks);
+//router.get("/", authenticate, getTasks);
 
 export default router;

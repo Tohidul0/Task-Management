@@ -30,6 +30,6 @@ app.use(cookieParser());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api/auth", authRoutes);
-//app.use("/api/tasks", taskRoutes);
+app.use("/api/tasks", taskRoutes);
 
 server.listen(3000, () => console.log("Server running on port 3000"));

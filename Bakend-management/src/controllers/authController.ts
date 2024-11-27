@@ -54,22 +54,22 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body;
     console.log(req.body)
     const user = await User.findOne({ email });
-    console.log(user)
+    
     if (!user) {
       res.status(404).json({ message: "User not found." });
       return;
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log(isMatch)
+    
     if (!isMatch) {
       res.status(401).json({ message: "Invalid credentials." });
       return;
     }
-    console.log("aaaaa")
+    //console.log("aaaaa")
 
-    const token : string = await  generateToken(user.email);
-    console.log(token)
+    const token : string =   generateToken(user._id);
+    //console.log(token)
     res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" });
     
     res.status(200).json({
@@ -88,3 +88,32 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: "An error occurred.", error });
   }
 };
+
+export const allUser = async (req: Request, res: Response): Promise<void> => {
+  try {
+    // Retrieve all users from the database
+    const users = await User.find({}).select("-password"); // Exclude the password field for security
+
+    // Check if any users exist
+    if (!users || users.length === 0) {
+      res.status(404).json({
+        status: false,
+        message: "No users found.",
+      });
+      return;
+    }
+    console.log(users)
+    res.status(200).json({
+      status: true,
+      message: "Users retrieved successfully.",
+      data: users,
+    });
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    res.status(500).json({
+      status: false,
+      message: "Internal Server Error. Please try again.",
+    });
+  }
+};
+

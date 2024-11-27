@@ -1,6 +1,6 @@
 // src/controllers/taskController.ts
 import { Request, Response } from "express";
-import { ITask } from "../models/Task";
+import { Task } from "../models/Task";
 
 export const createTask = async (req: any, res: Response): Promise<void> => {
     try {
@@ -23,7 +23,7 @@ export const createTask = async (req: any, res: Response): Promise<void> => {
         by: userId,
       };
   
-      const task: ITask = await Task.create({
+      const task = await Task.create({
         title,
         team,
         stage: stage.toLowerCase(),
@@ -33,11 +33,11 @@ export const createTask = async (req: any, res: Response): Promise<void> => {
         activities: [activity], // Activities is an array
       });
   
-      await Notice.create({
-        team,
-        text,
-        task: task._id,
-      });
+      // await Notice.create({
+      //   team,
+      //   text,
+      //   task: task._id,
+      // });
   
       res
         .status(200)
@@ -48,7 +48,7 @@ export const createTask = async (req: any, res: Response): Promise<void> => {
     }
   };
 
-export const getTasks = async (req: Request, res: Response) => {
-    const tasks = await Task.find().populate("assignedTo");
-    res.status(200).json(tasks);
-};
+// export const getTasks = async (req: Request, res: Response) => {
+//     const tasks = await Task.find().populate("assignedTo");
+//     res.status(200).json(tasks);
+// };

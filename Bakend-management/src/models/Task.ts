@@ -29,7 +29,7 @@ export interface ITask extends Document {
 }
 
 // Define the schema with types
-const taskSchema = new Schema<ITask>(
+const taskSchema: Schema = new Schema(
   {
     title: { type: String, required: true },
     date: { type: Date, default: new Date() },
@@ -77,6 +77,6 @@ const taskSchema = new Schema<ITask>(
 );
 
 // Create the model with types
-const Task: Model<ITask> = mongoose.model<ITask>("Task", taskSchema);
+export const   Task= mongoose.model<ITask>("Task", taskSchema);
 
-export default Task;
+

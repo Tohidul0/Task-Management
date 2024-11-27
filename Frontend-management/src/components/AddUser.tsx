@@ -7,6 +7,7 @@ import { AppDispatch } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface AddUserProps {
   open: boolean;
@@ -33,7 +34,7 @@ const AddUser: React.FC<AddUserProps> = ({ open, setOpen, userData }) => {
   const defaultValues: Partial<UserData> = userData || {};
   const { user } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
-
+  const navigate = useNavigate();
   const isLoading: boolean = false;
   const isUpdating: boolean = false;
 
@@ -56,6 +57,8 @@ const AddUser: React.FC<AddUserProps> = ({ open, setOpen, userData }) => {
 
       if (res.status === 201 && res.data.message === "success") {
         window.alert("Successfully User Add");
+        setOpen(false)
+        navigate("/team")
       } else {
         window.alert(" failed!");
       }
