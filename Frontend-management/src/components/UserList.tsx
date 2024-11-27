@@ -5,10 +5,21 @@ import { summary } from "../assets/data";
 import clsx from "clsx";
 import { getInitials } from "../Utilis/extra";
 import { MdCheck } from "react-icons/md";
+import axios from "axios";
+
+type User = {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  title: string;
+  isActive: boolean;
+};
 
 const UserList = ({ setTeam, team }) => {
   const data = summary.users;
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   const handleChange = (el) => {
     setSelectedUsers(el);
@@ -20,6 +31,20 @@ const UserList = ({ setTeam, team }) => {
     } else {
       setSelectedUsers(team);
     }
+  }, []);
+
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get<{ data: User[] }>("http://localhost:3000/api/auth/allUser");
+      setUsers(response.data.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
   return (
@@ -51,7 +76,7 @@ const UserList = ({ setTeam, team }) => {
             leaveTo='opacity-0'
           >
             <Listbox.Options className='z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm'>
-              {data?.map((user, index) => (
+              {users?.map((user, index) => (
                 <Listbox.Option
                   key={index}
                   className={({ active }) =>
