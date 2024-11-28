@@ -213,33 +213,33 @@ const Dashboard: React.FC = () => {
       total: number;
       icon: ReactNode;
       bg: string;
-  }
+  }[]
   const stats : CardData[] = [ // Changed type to any[] to avoid errors
     {
       _id: 1,
       label: "TOTAL TASK",
-      total: summary?.totalTasks || 0,
+      total: tasks.length || 0,
       icon: <FaNewspaper />,
       bg: "bg-[#1d4ed8]",
     },
     {
       _id: 2,
       label: "COMPLTED TASK",
-      total: totals["completed"] || 0,
+      total: tasks["completed"] || 0,
       icon: <MdAdminPanelSettings />,
       bg: "bg-[#0f766e]",
     },
     {
       _id: 3,
       label: "TASK IN PROGRESS ",
-      total: totals["in progress"] || 0,
+      total: tasks["in progress"] || 0,
       icon: <LuClipboardEdit />,
       bg: "bg-[#f59e0b]",
     },
     {
       _id: 4,
       label: "TODOS",
-      total: totals["todo"] || 0,
+      total: tasks["todo"] || 0,
       icon: <FaArrowsToDot />,
       bg: "bg-[#be185d]",
     },
@@ -250,7 +250,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="h-full py-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-        {stats.map((onecard: CardData ) => (
+        {stats?.map((onecard ) => (
           <Card   key={onecard._id} onecard={onecard}/>
         ))}
       </div>
