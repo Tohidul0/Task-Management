@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import TaskTitle from "../components/TaskTitle";
 import BoardView from "../components/BoardView";
-//import { tasks } from "../assets/data";
+import { tasks } from "../assets/data";
 import Table from "../components/Table";
 import AddTask from "../components/AddTask";
 import Title from "../components/Title";
@@ -52,28 +52,28 @@ const Tasks: React.FC = () => {
   const [selected, setSelected] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  // const [tasks, setTasks] = useState<Task[]>([]);
 
 
   const status: string = params?.status || "";
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get<{ data: Task[] }>("http://localhost:3000/api/tasks/allTask", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
-      setTasks(response.data.data);
-      console.log(response.data.data)
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
+  // const fetchUsers = async () => {
+  //   try {
+  //     const response = await axios.get<{ data: Task[] }>("http://localhost:3000/api/tasks/allTask", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       withCredentials: true,
+  //     });
+  //     setTasks(response.data.data);
+  //     console.log(response.data.data)
+  //   } catch (error) {
+  //     console.error("Error fetching tasks:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  // useEffect(() => {
+  //   fetchUsers();
+  // }, []);
 
   return loading ? (
     <div className="py-10">

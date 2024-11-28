@@ -8,6 +8,7 @@ import { getInitials } from "../Utilis/extra";
 import { RootState } from "../redux/store";
 import { logout } from "../redux/slices/authSlice";
 import { AppDispatch } from "../redux/store";
+import axios from "axios";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
@@ -17,11 +18,37 @@ const UserAvatar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const logoutHandler = () => {
-    console.log("logout");
-    dispatch(logout());
-    localStorage.removeItem("token");
-    navigate("/log-in");
+  // const logoutHandler = () => {
+  //   console.log("logout");
+  //   dispatch(logout());
+  //   localStorage.removeItem("token");
+  //   navigate("/log-in");
+  // };
+
+  // Form submission handler
+  const logoutHandler = async (data: any) => {
+    console.log("Submitted Data:", data);
+
+    // Add your login logic here
+    try {
+      const res = await axios.get(
+        `http://localhost:3000/api/auth/logout`,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, 
+        }
+      );
+
+      if (res.status === 200) {
+        dispatch(logout());
+        localStorage.removeItem("token");
+        navigate("/log-in");
+      } else {
+          window.alert("Logout Failed!!!")
+      } 
+    } catch (error: unknown) {
+      console.error("An error occurred:", error);
+    }
   };
 
   return (
