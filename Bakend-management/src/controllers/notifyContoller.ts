@@ -39,6 +39,7 @@ export const markNotificationAsRead = async (req: Request, res: Response): Promi
       res.status(404).json({ message: 'Notification not found.' });
       return;
     }
+    //render
 
    
     if (notification.isRead.includes(userObjectId)) {
