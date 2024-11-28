@@ -110,5 +110,5 @@ router.post("/", authenticate, createTask);
  *         description: Internal server error
  */
 //router.get("/", authenticate, getTasks);
-router.get("/allTask", authenticate, allTask)
+router.get("/allTask/:userId", authenticate, allTask)
 export default router;

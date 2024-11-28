@@ -29,31 +29,28 @@ const linkData: LinkData[] = [
     link: "tasks",
     icon: <FaTasks />,
   },
-  {
-    label: "Completed",
-    link: "completed/completed",
-    icon: <MdTaskAlt />,
-  },
-  {
-    label: "In Progress",
-    link: "in-progress/in progress",
-    icon: <MdOutlinePendingActions />,
-  },
-  {
-    label: "To Do",
-    link: "todo/todo",
-    icon: <MdOutlinePendingActions />,
-  },
+  
   {
     label: "Team",
     link: "team",
     icon: <FaUsers />,
   },
+  
+];
+const UserlinkData: LinkData[] = [
   {
-    label: "Trash",
-    link: "trashed",
-    icon: <FaTrashAlt />,
+    label: "Dashboard",
+    link: "dashboard",
+    icon: <MdDashboard />,
   },
+  {
+    label: "Tasks",
+    link: "tasks",
+    icon: <FaTasks />,
+  },
+  
+  
+  
 ];
 
 interface User {
@@ -70,10 +67,9 @@ const Sidebar = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const location = useLocation();
-
   const path = location.pathname.split("/")[1];
-  console.log(user)
-  const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 5);
+ 
+  const sidebarLinks = user?.isAdmin ? linkData :UserlinkData;
  
   const closeSidebar = () => {
     dispatch(setOpenSidebar(false));
@@ -98,7 +94,7 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="w-full h-full flex flex-col gap-6 p-5">
+    <div className="w-full h-full bg-gray-200 flex flex-col gap-6 p-5">
       <h1 className="flex gap-1 items-center">
         <p className="bg-blue-600 p-2 rounded-full">
           <MdOutlineAddTask className="text-white text-2xl font-black" />

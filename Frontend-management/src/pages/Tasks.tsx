@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import TaskTitle from "../components/TaskTitle";
 import BoardView from "../components/BoardView";
+import {  useSelector } from "react-redux";
 //import { tasks } from "../assets/data";
 import Table from "../components/Table";
 import AddTask from "../components/AddTask";
@@ -53,12 +54,13 @@ const Tasks: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const { user } = useSelector((state : any) => state.auth);
 
 
   const status: string = params?.status || "";
   const fetchUsers = async () => {
     try {
-      const response = await axios.get<{ data: Task[] }>("http://localhost:3000/api/tasks/allTask", {
+      const response = await axios.get<{ data: Task[] }>(`http://localhost:3000/api/tasks/allTask/${user._id}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -84,7 +86,7 @@ const Tasks: React.FC = () => {
       <div className="flex items-center justify-between mb-4">
         <Title title={status ? `${status} Tasks` : "Tasks"} />
 
-        {!status && (
+        {!status  &&(
           <Button
             onClick={() => setOpen(true)}
             label="Create Task"

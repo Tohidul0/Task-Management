@@ -17,10 +17,12 @@ interface ChartData {
   total: number; // Replace with the correct type of 'total' if it's not a number
 }
 
-export const Chart: React.FC = () => {
+export const Chart: React.FC = (props) => {
+  const chart = props.chart;
+  console.log(chart)
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <BarChart width={150} height={40} data={chartData as ChartData[]}>
+      <BarChart width={150} height={40} data={chart as ChartData[]}>
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />

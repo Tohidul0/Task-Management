@@ -104,7 +104,9 @@ const App = () => {
 
 
   return (
-    <main className='w-full min-h-screen bg-red-400 '>
+    <main className="w-full rounded border min-h-screen bg-gradient-to-r from-orange-400 via-orange-300 to-blue-300">
+
+
       <Routes>
          <Route element={<Layout />}>
             <Route index path='/' element={<Navigate to='/dashboard' />} />

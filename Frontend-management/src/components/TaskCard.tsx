@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 import {
-  MdAttachFile,
+ 
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdKeyboardDoubleArrowUp,
@@ -10,9 +10,9 @@ import { useSelector } from "react-redux";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../Utilis/extra";
 import TaskDialog from "./TaskDialog";
 import { BiMessageAltDetail } from "react-icons/bi";
-import { FaList } from "react-icons/fa";
+
 import UserInfo from "./UserInfo";
-import { IoMdAdd } from "react-icons/io";
+
 import AddSubTask from "./AddSubTask";
 
 const ICONS = {
@@ -39,13 +39,13 @@ const TaskCard = ({ task }) => {
             <span className='uppercase'>{task?.priority} Priority</span>
           </div>
 
-          {user?.isAdmin && <TaskDialog task={task} />}
+          {user && <TaskDialog task={task} />}
         </div>
 
         <>
           <div className='flex items-center gap-2'>
             <div
-              className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task?.stage])}
+              className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
             />
             <h4 className='line-clamp-1 text-black'>{task?.title}</h4>
           </div>
@@ -61,14 +61,8 @@ const TaskCard = ({ task }) => {
               <BiMessageAltDetail />
               <span>{task?.activities?.length}</span>
             </div>
-            <div className='flex gap-1 items-center text-sm text-gray-600 '>
-              <MdAttachFile />
-              <span>{task?.assets?.length}</span>
-            </div>
-            <div className='flex gap-1 items-center text-sm text-gray-600 '>
-              <FaList />
-              <span>0/{task?.subTasks?.length}</span>
-            </div>
+            
+            
           </div>
 
           <div className='flex flex-row-reverse'>
@@ -87,7 +81,7 @@ const TaskCard = ({ task }) => {
         </div>
 
         {/* sub tasks */}
-        {task?.subTasks?.length > 0 ? (
+        {/* {task?.subTasks?.length > 0 ? (
           <div className='py-4 border-t border-gray-200'>
             <h5 className='text-base line-clamp-1 text-black'>
               {task?.subTasks[0].title}
@@ -108,9 +102,9 @@ const TaskCard = ({ task }) => {
               <span className='text-gray-500'>No Sub Task</span>
             </div>
           </>
-        )}
+        )} */}
 
-        <div className='w-full pb-2'>
+        {/* <div className='w-full pb-2'>
           <button
             onClick={() => setOpen(true)}
             disabled={user.isAdmin ? false : true}
@@ -119,7 +113,7 @@ const TaskCard = ({ task }) => {
             <IoMdAdd className='text-lg' />
             <span>ADD SUBTASK</span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       <AddSubTask open={open} setOpen={setOpen} id={task._id} />

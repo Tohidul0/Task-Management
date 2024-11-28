@@ -61,6 +61,7 @@ const teamMemberSchema: Schema = new Schema(
   { _id: false } // Prevent Mongoose from generating a new _id for each embedded team member
 );
 
+
 // Define the main task schema
 const taskSchema: Schema = new Schema(
   {
@@ -107,6 +108,7 @@ const taskSchema: Schema = new Schema(
     isTrashed: { type: Boolean, default: false },
   },
   { timestamps: true }
+  
 );
 
 // Create the model with types

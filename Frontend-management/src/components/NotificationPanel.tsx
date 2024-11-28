@@ -85,10 +85,9 @@ const NotificationPanel = () => {
         );
         if (response.status === 200) {
           setData(response.data.notifications);
-         
-        } 
+        }
       } catch (err) {
-       console.error("An error occurred while fetching notifications");
+        console.error("An error occurred while fetching notifications");
       }
     };
 
@@ -99,10 +98,9 @@ const NotificationPanel = () => {
     // Implement logic to mark all as read
   };
 
-  const viewHandler = async(item: Notification) => {
+  const viewHandler = async (item: Notification) => {
     console.log(item);
     try {
-     
       const response = await axios.put(
         `http://localhost:3000/api/notification/${item._id}/read/${user._id}`,
         {},
@@ -114,11 +112,10 @@ const NotificationPanel = () => {
         }
       );
 
-      
       console.log(response.data.message);
     } catch (error) {
       // Handle error
-       console.error(error);
+      console.error(error);
     }
     setSelected(item);
   };

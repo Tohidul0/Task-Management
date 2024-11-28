@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 export default function Card(onecard ) {
     const {label, bg, icon, total } = onecard.onecard;
-    console.log(onecard)
+    //console.log(onecard , "hhhhh")
   return (
     <div className="w-full h-32 bg-white p-5 shadow-md rounded-md flex items-center justify-between">
         <div className="h-full flex flex-1 flex-col justify-between">
