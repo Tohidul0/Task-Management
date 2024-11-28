@@ -29,13 +29,12 @@ const linkData: LinkData[] = [
     link: "tasks",
     icon: <FaTasks />,
   },
-  
+
   {
     label: "Team",
     link: "team",
     icon: <FaUsers />,
   },
-  
 ];
 const UserlinkData: LinkData[] = [
   {
@@ -48,9 +47,6 @@ const UserlinkData: LinkData[] = [
     link: "tasks",
     icon: <FaTasks />,
   },
-  
-  
-  
 ];
 
 interface User {
@@ -68,9 +64,9 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const path = location.pathname.split("/")[1];
- 
-  const sidebarLinks = user?.isAdmin ? linkData :UserlinkData;
- 
+
+  const sidebarLinks = user?.isAdmin ? linkData : UserlinkData;
+
   const closeSidebar = () => {
     dispatch(setOpenSidebar(false));
   };
@@ -99,20 +95,13 @@ const Sidebar = () => {
         <p className="bg-blue-600 p-2 rounded-full">
           <MdOutlineAddTask className="text-white text-2xl font-black" />
         </p>
-        <span className="text-2xl font-bold text-black">TaskMe</span>
+        <span className="text-2xl font-bold text-black">SmartTask</span>
       </h1>
 
       <div className="flex-1 flex flex-col gap-y-5 py-8">
         {sidebarLinks.map((link) => (
           <NavLink el={link} key={link.label} />
         ))}
-      </div>
-
-      <div>
-        <button className="w-full flex gap-2 p-2 items-center text-lg text-gray-800">
-          <MdSettings />
-          <span>Settings</span>
-        </button>
       </div>
     </div>
   );

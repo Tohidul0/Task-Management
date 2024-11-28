@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -20,13 +19,12 @@ const Register: React.FC = () => {
   } = useForm<RegisterFormInputs>();
   const navigate = useNavigate();
 
-  // Form submission handler
   const submitHandler: SubmitHandler<RegisterFormInputs> = async (data) => {
     console.log("Submitted Data:", data);
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/auth/register`, // Adjust the endpoint as needed
+        `http://localhost:3000/api/auth/register`,
         data,
         {
           headers: { "Content-Type": "application/json" },
@@ -36,7 +34,7 @@ const Register: React.FC = () => {
 
       if (res.status === 201 && res.data.message === "success") {
         window.alert("Registration successful! Redirecting to login...");
-        navigate("/log-in"); // Redirect to login page
+        navigate("/log-in"); 
       } else {
         window.alert( "Registration failed!");
       }

@@ -1,47 +1,52 @@
 import React, { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AiTwotoneFolderOpen } from "react-icons/ai";
+
 import { BsThreeDots } from "react-icons/bs";
-import { HiDuplicate } from "react-icons/hi";
+
 import { MdAdd, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Menu, Transition } from "@headlessui/react";
 import AddTask from "./AddTask";
-import AddSubTask from "./AddSubTask";
+import axios from "axios";
+
 import ConfirmatioDialog from "./Dialogs";
 
 const TaskDialog = ({ task }) => {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  var id = task._id;
+  
+  
 
   const navigate = useNavigate();
 
   const duplicateHandler = () => {};
-  const deleteClicks = () => {};
+  const deleteClicks = async() => {
+   
+    try {
+      const response = await axios.delete(`http://localhost:3000/api/tasks/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true, // Include credentials (e.g., cookies) in the request
+      });
+      console.log('Task deleted successfully:', response.data);
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
+  };
   const deleteHandler = () => {};
 
   const items = [
-    {
-      label: "Open Task",
-      icon: <AiTwotoneFolderOpen className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => navigate(`/task/${task._id}`),
-    },
+   
     {
       label: "Edit",
       icon: <MdOutlineEdit className='mr-2 h-5 w-5' aria-hidden='true' />,
       onClick: () => setOpenEdit(true),
     },
-    {
-      label: "Add Sub-Task",
-      icon: <MdAdd className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => setOpen(true),
-    },
-    {
-      label: "Duplicate",
-      icon: <HiDuplicate className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => duplicateHanlder(),
-    },
+   
+  
   ];
 
   return (
@@ -110,13 +115,7 @@ const TaskDialog = ({ task }) => {
         key={new Date().getTime()}
       />
 
-      <AddSubTask open={open} setOpen={setOpen} />
-
-      <ConfirmatioDialog
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={deleteHandler}
-      />
+      
     </>
   );
 };

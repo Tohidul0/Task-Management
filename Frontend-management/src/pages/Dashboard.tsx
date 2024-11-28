@@ -6,7 +6,7 @@ import {
 import { LuClipboardEdit } from "react-icons/lu";
 import { FaNewspaper } from "react-icons/fa";
 import { FaArrowsToDot } from "react-icons/fa6";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Chart } from "../components/Chart";
 import Card from "../components/Card";
 import TaskTable from "../components/TaskTable";
@@ -16,11 +16,11 @@ import axios from "axios";
 
 
 interface CardData {
-  _id: number; // Example property
+  _id: number;
   label: string;
-    total: number;
-    icon: ReactNode;
-    bg: string;
+  total: number;
+  icon: ReactNode;
+  bg: string;
 }[]
 
 
@@ -32,10 +32,10 @@ interface Task {
   priority: string;
   stage: string;
   assets: string[];
-  team: any[]; 
+  team: any[];
   isTrashed: boolean;
-  activities: any[]; 
-  subTasks: any[]; 
+  activities: any[];
+  subTasks: any[];
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -46,49 +46,48 @@ interface User {
   name: string;
   email: string;
   createdAt: string;
-  title : any;
+  title: any;
   role: string;
   isActive: boolean;
 }
 
 
 const Dashboard: React.FC = () => {
-  //const totals = summary.tasks;
   const [tasks, setTasks] = useState<Task[]>([]);
   const [users, setUsers] = useState<User[]>([]);
-  const[all, setAll] = useState({})
+  const [all, setAll] = useState({})
   const [chart, setChart] = useState([]);
-  const { user } = useSelector((state : any) => state.auth);
-  const stats : CardData[] = [ 
-  {
-    _id: 1,
-    label: "TOTAL TASK",
-    total: tasks.length || 0,
-    icon: <FaNewspaper />,
-    bg: "bg-[#1d4ed8]",
-  },
-  {
-    _id: 2,
-    label: "COMPLTED TASK",
-    total: all.completed || 0,
-    icon: <MdAdminPanelSettings />,
-    bg: "bg-[#0f766e]",
-  },
-  {
-    _id: 3,
-    label: "TASK IN PROGRESS ",
-    total: all.inprogress || 0,
-    icon: <LuClipboardEdit />,
-    bg: "bg-[#f59e0b]",
-  },
-  {
-    _id: 4,
-    label: "TODOS",
-    total: all.todo || 0,
-    icon: <FaArrowsToDot />,
-    bg: "bg-[#be185d]",
-  },
-];
+  const { user } = useSelector((state: any) => state.auth);
+  const stats: CardData[] = [
+    {
+      _id: 1,
+      label: "TOTAL TASK",
+      total: tasks.length || 0,
+      icon: <FaNewspaper />,
+      bg: "bg-[#1d4ed8]",
+    },
+    {
+      _id: 2,
+      label: "COMPLTED TASK",
+      total: all.completed || 0,
+      icon: <MdAdminPanelSettings />,
+      bg: "bg-[#0f766e]",
+    },
+    {
+      _id: 3,
+      label: "TASK IN PROGRESS ",
+      total: all.inprogress || 0,
+      icon: <LuClipboardEdit />,
+      bg: "bg-[#f59e0b]",
+    },
+    {
+      _id: 4,
+      label: "TODOS",
+      total: all.todo || 0,
+      icon: <FaArrowsToDot />,
+      bg: "bg-[#be185d]",
+    },
+  ];
 
   const fetchTasks = async () => {
     try {
@@ -106,7 +105,7 @@ const Dashboard: React.FC = () => {
       console.error("Error fetching tasks:", error);
     }
   };
-  
+
   const fetchUsers = async () => {
     try {
       const response = await axios.get<{ data: User[] }>("http://localhost:3000/api/auth/allUser");
@@ -120,29 +119,26 @@ const Dashboard: React.FC = () => {
     fetchTasks();
     fetchUsers();
   }, []);
-  
- 
+
+
 
   return (
     <div className="h-full py-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-        {stats?.map((onecard ) => (
-          <Card   key={onecard._id} onecard={onecard}/>
+        {stats?.map((onecard) => (
+          <Card key={onecard._id} onecard={onecard} />
         ))}
       </div>
 
       <div className="w-full bg-white my-16 p-4 rounded shadow-sm">
         <h4 className="text-xl text-gray-600 font-semibold">Chart by Priority</h4>
-        <Chart  chart = {chart}/>
+        <Chart chart={chart} />
       </div>
 
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
-        {/* Left side: Task table */}
-        <TaskTable tasks ={tasks} />
-
-        {/* Right side: User table */}
-        {/* <UserTable users={summary?.users} /> */}
-        <UserTable users={users}/>
+      
+        <TaskTable tasks={tasks} />
+        <UserTable users={users} />
       </div>
     </div>
   );

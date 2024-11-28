@@ -18,18 +18,9 @@ const UserAvatar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  // const logoutHandler = () => {
-  //   console.log("logout");
-  //   dispatch(logout());
-  //   localStorage.removeItem("token");
-  //   navigate("/log-in");
-  // };
-
-  // Form submission handler
   const logoutHandler = async (data: any) => {
     console.log("Submitted Data:", data);
 
-    // Add your login logic here
     try {
       const res = await axios.get(
         `http://localhost:3000/api/auth/logout`,
@@ -81,23 +72,12 @@ const UserAvatar = () => {
                       className='text-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base'
                     >
                       <FaUser className='mr-2' aria-hidden='true' />
-                      Profile
+                      {user?.name}
                     </button>
                   )}
                 </Menu.Item>
 
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      onClick={() => setOpenPassword(true)}
-                      className={`tetx-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base`}
-                    >
-                      <FaUserLock className='mr-2' aria-hidden='true' />
-                      Change Password
-                    </button>
-                  )}
-                </Menu.Item>
-
+                
                 <Menu.Item>
                   {({ active }) => (
                     <button

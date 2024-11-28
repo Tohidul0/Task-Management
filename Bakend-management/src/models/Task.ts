@@ -19,7 +19,7 @@ export interface ITeamMember {
   _id: ObjectId | string;
   name: string;
   email: string;
-  password: string;
+  
   role: string;
   title?: string;
   isActive: boolean;
@@ -49,7 +49,6 @@ const teamMemberSchema: Schema = new Schema(
     _id: { type: Schema.Types.ObjectId, required: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
-    password: { type: String, required: true },
     role: { type: String, required: true },
     title: { type: String },
     isActive: { type: Boolean, required: true },

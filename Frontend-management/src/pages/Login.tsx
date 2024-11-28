@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store"; // Adjust the path to your store
+import { RootState } from "../redux/store";
 
 import axios from "axios";
 import { setCredentials } from "../redux/slices/authSlice";
@@ -26,9 +26,7 @@ interface User {
 }
 
 const Login: React.FC = () => {
-  // Selector with type safety
   const { user } = useSelector((state: RootState) => state.auth);
-  //console.log(user, 1000);
   const dispatch = useDispatch<AppDispatch>();
 
   const {
@@ -39,44 +37,40 @@ const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // Form submission handler
   const submitHandler: SubmitHandler<LoginFormInputs> = async (data: any) => {
-    console.log("Submitted Data:", data);
-
-    // Add your login logic here
+    //console.log("Submitted Data:", data);
     try {
       const res = await axios.post<SignInResponse>(
         `http://localhost:3000/api/auth/login`,
-        data, // Axios automatically converts objects to JSON
+        data,
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true, 
+          withCredentials: true,
         }
       );
 
       if (res.data.success === "false") {
         window.alert("Log In failed!!!");
       } else if (res.data.user) {
-        // Transform SignInResponse.user to User
+
         const user: User = {
           _id: res.data.user._id,
           name: res.data.user.name,
           email: res.data.user.email,
-          role : res.data.user.role,
+          role: res.data.user.role,
           isActive: res.data.user.isActive,
-          isAdmin : res.data.user.isAdmin,
-           createdAt: res.data.user.createdAt,
+          isAdmin: res.data.user.isAdmin,
+          createdAt: res.data.user.createdAt,
         };
         localStorage.setItem("token", res.data.token);
 
-        // Dispatch the transformed User
         dispatch(setCredentials(user));
         navigate("/");
       } else {
         window.alert("Unexpected response from the server!");
       }
     } catch (error: unknown) {
-      console.error("An error occurred:", error);
+      window.alert("An error occurred:");
     }
   };
 
@@ -104,20 +98,20 @@ const Login: React.FC = () => {
             </p>
           </div>
 
-          {/* Decorative Element */}
+
           <div className="mt-10 relative">
             <div className="absolute inset-0 blur-2xl bg-gradient-to-r from-orange-300 to-orange-500 opacity-30 rounded-full w-[250px] h-[250px]"></div>
-            <div className="relative w-[120px] h-[120px] border-4 border-orange-500 rounded-full animate-pulse"></div>
+
           </div>
         </div>
 
-        {/* Right Side */}
+
         <div className="lg:w-1/2 bg-white shadow-lg rounded-3xl p-10">
           <form
             onSubmit={handleSubmit(submitHandler)}
             className="flex flex-col gap-8"
           >
-            {/* Heading */}
+
             <div>
               <h2 className="text-2xl font-semibold text-orange-700 text-center">
                 Welcome Back!
@@ -127,7 +121,6 @@ const Login: React.FC = () => {
               </p>
             </div>
 
-            {/* Email Field */}
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="email"
@@ -149,7 +142,6 @@ const Login: React.FC = () => {
               )}
             </div>
 
-            {/* Password Field */}
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="password"
@@ -172,15 +164,6 @@ const Login: React.FC = () => {
                 </p>
               )}
             </div>
-
-            {/* Forgot Password */}
-            {/* <div className="text-right">
-              <a href="#" className="text-sm text-orange-600 hover:underline">
-                Forgot Password?
-              </a>
-            </div> */}
-
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition duration-200"

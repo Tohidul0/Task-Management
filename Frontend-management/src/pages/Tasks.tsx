@@ -6,15 +6,14 @@ import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import TaskTitle from "../components/TaskTitle";
 import BoardView from "../components/BoardView";
-import {  useSelector } from "react-redux";
-//import { tasks } from "../assets/data";
+import { useSelector } from "react-redux";
 import Table from "../components/Table";
 import AddTask from "../components/AddTask";
 import Title from "../components/Title";
 import Tabs from "../components/Tabs";
 import axios from "axios";
 
-// Define Types for Task and Params
+
 interface Task {
   _id: string;
   title: string;
@@ -22,10 +21,10 @@ interface Task {
   priority: string;
   stage: string;
   assets: string[];
-  team: any[]; 
+  team: any[];
   isTrashed: boolean;
-  activities: any[]; 
-  subTasks: any[]; 
+  activities: any[];
+  subTasks: any[];
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -54,7 +53,7 @@ const Tasks: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const { user } = useSelector((state : any) => state.auth);
+  const { user } = useSelector((state: any) => state.auth);
 
 
   const status: string = params?.status || "";
@@ -86,7 +85,7 @@ const Tasks: React.FC = () => {
       <div className="flex items-center justify-between mb-4">
         <Title title={status ? `${status} Tasks` : "Tasks"} />
 
-        {!status  &&(
+        {!status && (
           <Button
             onClick={() => setOpen(true)}
             label="Create Task"

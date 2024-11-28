@@ -25,7 +25,7 @@ export const formatDate = (date : any) => {
   }
   
   export function getInitials(fullName : string) {
-    console.log(fullName)
+  
     const names  = fullName?.split(" ");
   
     const initials = names?.slice(0, 2).map((name :any) => name[0].toUpperCase());

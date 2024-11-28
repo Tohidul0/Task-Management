@@ -18,7 +18,7 @@ import Users from './pages/Users';
 
 function Layout() {
   const { user } = useSelector((state : any) => state.auth);
-  console.log(user)
+ 
 
   const location = useLocation();
 

@@ -7,7 +7,7 @@ export const createTask = async (req: any, res: Response): Promise<void> => {
   try {
     const { userId } = req.user;
 
-    const { title, team, stage, date, priority, assets } = req.body;
+    const { title, team, stage, date, priority } = req.body;
 
     let text = "New task has been assigned to you";
     if (team?.length > 1) {
@@ -23,7 +23,7 @@ export const createTask = async (req: any, res: Response): Promise<void> => {
       activity: text,
       by: userId,
     };
-    console.log(team);
+   
     var Team = [];
     for (let i = 0; i < team.length; i++) {
       
@@ -43,7 +43,7 @@ export const createTask = async (req: any, res: Response): Promise<void> => {
       stage: stage.toLowerCase(),
       date,
       priority: priority.toLowerCase(),
-      assets,
+     
       activities: [activity],
     });
 
@@ -61,6 +61,76 @@ export const createTask = async (req: any, res: Response): Promise<void> => {
     res.status(400).json({ status: false, message: error.message });
   }
 };
+
+export const updateTask = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { taskId } = req.params; 
+    const { title, team, stage, date, priority } = req.body; 
+
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      res.status(404).json({ status: false, message: "Task not found." });
+      return;
+    }
+
+    if (title) task.title = title;
+    if (stage) task.stage = stage.toLowerCase();
+    if (date) task.date = date;
+    if (priority) task.priority = priority.toLowerCase();
+    
+
+    let updatedTeam = task.team;
+
+    if (team && team.length) {
+      updatedTeam = [];
+      for (let i = 0; i < team.length; i++) {
+        const user = await User.findOne({ _id: team[i] });
+        if (user) {
+          const { password, ...userWithoutPassword } = user.toObject();
+          updatedTeam.push(userWithoutPassword);
+        }
+      }
+      task.team = updatedTeam;
+    }
+
+    // Save the updated task
+    const updatedTask = await task.save();
+
+    res.status(200).json({
+      status: true,
+      message: "Task updated successfully.",
+      task: updatedTask,
+    });
+  } catch (error: any) {
+    console.error(error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
+
+
+export const deleteTask = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { taskId } = req.params;
+    const task = await Task.findById(taskId);
+
+    if (!task) {
+      res.status(404).json({ status: false, message: "Task not found." });
+      return;
+    }
+    await Task.findByIdAndDelete(taskId);
+
+    res.status(200).json({
+      status: true,
+      message: "Task deleted successfully.",
+    });
+  } catch (error: any) {
+    console.error(error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
 
 export const allTask = async (req: Request, res: Response): Promise<void> => {
   const { userId } = req.params;
