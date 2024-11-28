@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ReactNode } from "react";
 import {
   MdAdminPanelSettings
@@ -12,24 +12,27 @@ import { Chart } from "../components/Chart";
 import Card from "../components/Card";
 import TaskTable from "../components/TaskTable";
 import UserTable from "../components/UserTable";
+import axios from "axios";
 
 
 
-// interface Task {
-//   _id: string;
-//   title: string;
-//   date: string;
-//   priority: string;
-//   stage: string;
-//   assets: string[];
-//   team: any[]; 
-//   isTrashed: boolean;
-//   activities: any[]; 
-//   subTasks: any[]; 
-//   createdAt: string;
-//   updatedAt: string;
-//   __v: number;
-// }
+
+
+interface Task {
+  _id: string;
+  title: string;
+  date: string;
+  priority: string;
+  stage: string;
+  assets: string[];
+  team: any[]; 
+  isTrashed: boolean;
+  activities: any[]; 
+  subTasks: any[]; 
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
 
 
@@ -54,15 +57,15 @@ import UserTable from "../components/UserTable";
 //   stats: Stats[];
 // }
 
-// interface User {
-//   _id: string;
-//   name: string;
-//   email: string;
-//   createdAt: string;
-//   title : string;
-//   role: string;
-//   isActive: boolean;
-// }
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  title : string;
+  role: string;
+  isActive: boolean;
+}
 
 // interface UserTableProps {
 //   users: User[];
@@ -79,6 +82,10 @@ import UserTable from "../components/UserTable";
 // interface UserTableProps {
 //   users: User[]; // Changed type to any to avoid errors
 // }
+
+
+
+
 
 // const TaskTable: React.FC<TaskTableProps>  = ({ tasks }) => {
 //   const TableHeader = () => (
@@ -166,6 +173,40 @@ import UserTable from "../components/UserTable";
 
 const Dashboard: React.FC = () => {
   const totals = summary.tasks;
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get<{ data: Task[] }>("http://localhost:3000/api/tasks/allTask", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      setTasks(response.data.data);
+      console.log(response.data.data)
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
+  
+ 
+
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get<{ data: User[] }>("http://localhost:3000/api/auth/allUser");
+      setUsers(response.data.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+    fetchUsers();
+  }, []);
   interface CardData {
     _id: number; // Example property
     label: string;
@@ -221,10 +262,11 @@ const Dashboard: React.FC = () => {
 
       <div className="w-full flex flex-col md:flex-row gap-4 2xl:gap-10 py-8">
         {/* Left side: Task table */}
-        <TaskTable tasks ={summary?.last10Task} />
+        <TaskTable tasks ={tasks} />
 
         {/* Right side: User table */}
-        <UserTable users={summary?.users} />
+        {/* <UserTable users={summary?.users} /> */}
+        <UserTable users={users}/>
       </div>
     </div>
   );
