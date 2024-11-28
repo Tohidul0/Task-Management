@@ -14,7 +14,7 @@ import notifyRotes from "./routes/notifyRoutes";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
-
+const port = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 
@@ -36,4 +36,4 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/notification", notifyRotes);
 
-server.listen(3000, () => console.log("Server running on port 3000"));
+server.listen(port, () => console.log(`Server running on port ${3000}`));
