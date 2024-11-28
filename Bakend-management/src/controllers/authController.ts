@@ -119,7 +119,7 @@ export const allUser = async (req: Request, res: Response): Promise<void> => {
       });
       return;
     }
-    console.log(users)
+    //console.log(users)
     res.status(200).json({
       status: true,
       message: "Users retrieved successfully.",

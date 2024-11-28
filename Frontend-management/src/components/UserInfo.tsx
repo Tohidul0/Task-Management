@@ -12,6 +12,7 @@ type userPorps ={
 }
 
 const UserInfo = ({ user } : userPorps) => {
+  console.log(user)
   return (
     <div className='px-4'>
       <Popover className='relative'>

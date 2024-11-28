@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
+import { ObjectId } from "mongodb";
 
 // Define interfaces for the schema
 export interface IActivity {
@@ -14,6 +15,20 @@ export interface ISubTask {
   tag?: string;
 }
 
+export interface ITeamMember {
+  _id: ObjectId | string;
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  title?: string;
+  isActive: boolean;
+  isAdmin?: boolean;
+  tasks: ObjectId[]; // Use ObjectId[] for task references
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ITask extends Document {
   title: string;
   date: Date;
@@ -22,13 +37,31 @@ export interface ITask extends Document {
   activities: IActivity[];
   subTasks: ISubTask[];
   assets: string[];
-  team: mongoose.Types.ObjectId[]; // References to User
+  team: ITeamMember[]; // Array of team member objects
   isTrashed: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
-// Define the schema with types
+// Define the schema for team member (embedded object in task)
+const teamMemberSchema: Schema = new Schema(
+  {
+    _id: { type: Schema.Types.ObjectId, required: true },
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    role: { type: String, required: true },
+    title: { type: String },
+    isActive: { type: Boolean, required: true },
+    isAdmin: { type: Boolean },
+    tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+  },
+  { _id: false } // Prevent Mongoose from generating a new _id for each embedded team member
+);
+
+// Define the main task schema
 const taskSchema: Schema = new Schema(
   {
     title: { type: String, required: true },
@@ -70,13 +103,11 @@ const taskSchema: Schema = new Schema(
       },
     ],
     assets: [String],
-    team: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    team: [teamMemberSchema], // Array of team member objects
     isTrashed: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
 // Create the model with types
-export const   Task= mongoose.model<ITask>("Task", taskSchema);
-
-
+export const Task = mongoose.model<ITask>("Task", taskSchema);
