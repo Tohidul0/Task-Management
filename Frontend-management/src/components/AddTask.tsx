@@ -7,6 +7,7 @@ import SelectList from "./SelectList";
 import UserList from "./UserList";
 import Button from "./Button";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORITY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
@@ -23,7 +24,9 @@ interface TaskFormData {
 }
 
 
-const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
+const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task, fetchTasks }) => {
+  const navigate = useNavigate();
+  console.log(fetchTasks)
   if(task){
     
     const {
@@ -76,7 +79,7 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
           
           isTrashed: false,
         };
-        console.log(task._id, "jaaaa")
+       
 
   
         const response = await axios.put(`http://localhost:3000/api/tasks/${task._id}`, taskup, {
@@ -87,7 +90,10 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
         });
   
         console.log("Task successfully submitted:", response.data);
+        navigate("/tasks")
+        fetchTasks();
         setOpen(false);
+
       } catch (error) {
         console.error("Error submitting task:", error);
       } finally {
@@ -232,6 +238,7 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
       });
 
       console.log("Task successfully submitted:", response.data);
+      fetchTasks();
       setOpen(false);
     } catch (error) {
       console.error("Error submitting task:", error);

@@ -52,6 +52,8 @@ interface User {
 }
 
 
+
+
 const Dashboard: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [users, setUsers] = useState<User[]>([]);
@@ -92,7 +94,7 @@ const Dashboard: React.FC = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get<{ data: Task[] }>(`http://localhost:3000/api/tasks/allTask/${user._id}`, {
+      const response = await axios.get<{ data: any , all : any, chart : any}>(`http://localhost:3000/api/tasks/allTask/${user._id}`, {
         headers: {
           "Content-Type": "application/json",
         },

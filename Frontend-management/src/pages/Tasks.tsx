@@ -57,7 +57,7 @@ const Tasks: React.FC = () => {
 
 
   const status: string = params?.status || "";
-  const fetchUsers = async () => {
+  const fetchTasks = async () => {
     try {
       const response = await axios.get<{ data: Task[] }>(`http://localhost:3000/api/tasks/allTask/${user._id}`, {
         headers: {
@@ -73,7 +73,8 @@ const Tasks: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchTasks();
+    
   }, []);
 
   return loading ? (
@@ -116,7 +117,7 @@ const Tasks: React.FC = () => {
         )}
       </Tabs>
 
-      <AddTask open={open} setOpen={setOpen} />
+      <AddTask fetchTasks= {fetchTasks}  open={open} setOpen={setOpen} />
     </div>
   );
 };

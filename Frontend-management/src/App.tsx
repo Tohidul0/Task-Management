@@ -14,7 +14,7 @@ import Dashboard from './pages/Dashboard';
 import Tasks from './pages/Tasks';
 import Register from './pages/SignUp';
 import Users from './pages/Users';
-// import Tasks from './pages/Tasks';
+import TaskDetail from './components/TaskDetails';
 
 function Layout() {
   const { user } = useSelector((state : any) => state.auth);
@@ -113,6 +113,7 @@ const App = () => {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/tasks' element={<Tasks />} />
             <Route path='/team' element={<Users />} />
+            <Route path='/:taskdetailsID' element={<TaskDetail/>} />
          </Route>
             <Route path='/log-in' element={<Login />} />
             <Route path='/Sign-Up' element={<Register/>} />

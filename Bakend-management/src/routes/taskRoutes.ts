@@ -1,5 +1,5 @@
 import express from "express";
-import { allTask, createTask, deleteTask, updateTask } from "../controllers/taskController";
+import { allTask, createTask, deleteTask, OneTask, updateTask } from "../controllers/taskController";
 import { authenticate } from "../middlewares/authMiddleware";
 
 const router = express.Router();
@@ -66,6 +66,7 @@ const router = express.Router();
  *         description: Internal server error
  */
 router.post("/", authenticate, createTask);
+router.get("/taskdetails/:taskdetailsID", authenticate, OneTask);
 router.put("/:taskId", authenticate, updateTask);
 router.delete("/:taskId", authenticate, deleteTask);
 

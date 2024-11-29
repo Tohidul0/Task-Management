@@ -52,15 +52,16 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
-    console.log(req.body)
+    //console.log(req.body)
     const user = await User.findOne({ email });
-    
+    console.log(user)
     if (!user) {
       res.status(404).json({ message: "User not found." });
       return;
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log(isMatch)
     
     if (!isMatch) {
       res.status(401).json({ message: "Invalid credentials." });
@@ -69,11 +70,11 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     //console.log("aaaaa")
 
     const token : string =   generateToken(user._id);
-    //console.log(token)
+    console.log(token)
     res.cookie("token", token, { httpOnly: true,
        secure: process.env.NODE_ENV === "production",
-       sameSite: "none",
-       domain: process.env.NODE_ENV === "production" ? "http://localhost:3000" : undefined });
+        });
+      console.log("lala")
     
     res.status(200).json({
       token,

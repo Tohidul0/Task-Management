@@ -130,6 +130,28 @@ export const deleteTask = async (req: Request, res: Response): Promise<void> => 
     res.status(400).json({ status: false, message: error.message });
   }
 };
+export const OneTask = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { taskdetailsID } = req.params;
+    const task = await Task.findById(taskdetailsID);
+
+    if (!task) {
+      res.status(404).json({ status: false, message: "Task not found." });
+      return;
+    }
+    console.log(task)
+    
+
+    res.status(200).json({
+      status: true,
+      data: task,
+      message: "Get Task successfully.",
+    });
+  } catch (error: any) {
+    console.error(error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
 
 
 export const allTask = async (req: Request, res: Response): Promise<void> => {

@@ -12,8 +12,7 @@ import TaskDialog from "./TaskDialog";
 import { BiMessageAltDetail } from "react-icons/bi";
 
 import UserInfo from "./UserInfo";
-
-import AddSubTask from "./AddSubTask";
+import { Link } from "react-router-dom";
 
 const ICONS = {
   high: <MdKeyboardDoubleArrowUp />,
@@ -79,6 +78,8 @@ const TaskCard = ({ task }) => {
             ))}
           </div>
         </div>
+        <Link to={`/${task._id}`}> taskDetails</Link>
+        
 
       </div>
 
