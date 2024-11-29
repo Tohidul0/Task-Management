@@ -14,6 +14,7 @@ const PRIORITY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 interface AddTaskProps {
   open: boolean;
   setOpen: (state: boolean) => void;
+  task : any;
 }
 
 interface TaskFormData {
@@ -37,28 +38,28 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
    
     const [uploading, setUploading] = useState<boolean>(false);
   
-    const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        try {
-          setUploading(true);
-          const uploadedFiles = await Promise.all(
-            Array.from(e.target.files).map(async (file) => {
-              const formData = new FormData();
-              formData.append("file", file);
-              const response = await axios.post("/api/upload", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-              });
-              return response.data.url; // Assume API returns the file URL
-            })
-          );
-          setAssets(uploadedFiles);
-        } catch (error) {
-          console.error("Error uploading files:", error);
-        } finally {
-          setUploading(false);
-        }
-      }
-    };
+    // const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    //   if (e.target.files) {
+    //     try {
+    //       setUploading(true);
+    //       const uploadedFiles = await Promise.all(
+    //         Array.from(e.target.files).map(async (file) => {
+    //           const formData = new FormData();
+    //           formData.append("file", file);
+    //           const response = await axios.post("/api/upload", formData, {
+    //             headers: { "Content-Type": "multipart/form-data" },
+    //           });
+    //           return response.data.url; // Assume API returns the file URL
+    //         })
+    //       );
+    //       setAssets(uploadedFiles);
+    //     } catch (error) {
+    //       console.error("Error uploading files:", error);
+    //     } finally {
+    //       setUploading(false);
+    //     }
+    //   }
+    // };
   
     const submitHandler: SubmitHandler<TaskFormData> = async (data) => {
       try {
@@ -78,7 +79,7 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
         console.log(task._id, "jaaaa")
 
   
-        const response = await axios.put(`http://localhost:3000/api/tasks/${task._id}`, taskup, {
+        const response = await axios.put(`https://task-management-1-lecw.onrender.com/api/tasks/${task._id}`, taskup, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -180,31 +181,31 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
   const [team, setTeam] = useState<string[]>([]);
   const [stage, setStage] = useState<string>(LISTS[0]);
   const [priority, setPriority] = useState<string>(PRIORITY[2]);
-  const [assets, setAssets] = useState<string[]>([]);
+  
   const [uploading, setUploading] = useState<boolean>(false);
 
-  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      try {
-        setUploading(true);
-        const uploadedFiles = await Promise.all(
-          Array.from(e.target.files).map(async (file) => {
-            const formData = new FormData();
-            formData.append("file", file);
-            const response = await axios.post("/api/upload", formData, {
-              headers: { "Content-Type": "multipart/form-data" },
-            });
-            return response.data.url; // Assume API returns the file URL
-          })
-        );
-        setAssets(uploadedFiles);
-      } catch (error) {
-        console.error("Error uploading files:", error);
-      } finally {
-        setUploading(false);
-      }
-    }
-  };
+  // const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     try {
+  //       setUploading(true);
+  //       const uploadedFiles = await Promise.all(
+  //         Array.from(e.target.files).map(async (file) => {
+  //           const formData = new FormData();
+  //           formData.append("file", file);
+  //           const response = await axios.post("/api/upload", formData, {
+  //             headers: { "Content-Type": "multipart/form-data" },
+  //           });
+  //           return response.data.url; // Assume API returns the file URL
+  //         })
+  //       );
+  //       setAssets(uploadedFiles);
+  //     } catch (error) {
+  //       console.error("Error uploading files:", error);
+  //     } finally {
+  //       setUploading(false);
+  //     }
+  //   }
+  // };
 
   const submitHandler: SubmitHandler<TaskFormData> = async (data) => {
     try {
@@ -223,7 +224,7 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
       };
       console.log(task)
 
-      const response = await axios.post("http://localhost:3000/api/tasks/", task, {
+      const response = await axios.post("https://task-management-1-lecw.onrender.com/api/tasks/", task, {
         headers: {
           "Content-Type": "application/json",
         },

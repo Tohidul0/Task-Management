@@ -23,7 +23,7 @@ const UserAvatar = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/auth/logout`,
+        `https://task-management-1-lecw.onrender.com/api/auth/logout`,
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true, 

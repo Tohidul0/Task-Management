@@ -88,10 +88,11 @@ const Dashboard: React.FC = () => {
       bg: "bg-[#be185d]",
     },
   ];
+  
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get<{ data: Task[] }>(`http://localhost:3000/api/tasks/allTask/${user._id}`, {
+      const response = await axios.get<{ data: Task[] }>(`https://task-management-1-lecw.onrender.com/api/tasks/allTask/${user._id}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -108,7 +109,7 @@ const Dashboard: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get<{ data: User[] }>("http://localhost:3000/api/auth/allUser");
+      const response = await axios.get<{ data: User[] }>("https://task-management-1-lecw.onrender.com/api/auth/allUser");
       setUsers(response.data.data);
     } catch (error) {
       console.error("Error fetching users:", error);

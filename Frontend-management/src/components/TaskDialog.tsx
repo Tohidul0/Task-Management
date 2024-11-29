@@ -25,7 +25,7 @@ const TaskDialog = ({ task }) => {
   const deleteClicks = async() => {
    
     try {
-      const response = await axios.delete(`http://localhost:3000/api/tasks/${id}`, {
+      const response = await axios.delete(`https://task-management-1-lecw.onrender.com/api/tasks/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
