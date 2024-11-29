@@ -55,14 +55,13 @@ Smart Task Management is a collaborative task management tool designed to help u
 - **CRUD Operations**: Full CRUD functionality for managing tasks and users through the backend API.
 - **API Documentation**: Swagger UI provides detailed API documentation for easy understanding of endpoints, request bodies, and responses.
 
----
+
 
 ## Installation
 
 ### Frontend Setup
 
 1. **Clone the repository**:
-   ```bash
 2.
    git clone https://github.com/Tohidul0/Task-Management.git
 
@@ -78,51 +77,44 @@ Copy code
 npm install
 Run the frontend app:
 
-bash
-Copy code
+
 npm start
 The frontend application will be running on http://localhost:5173.
 
 Backend Setup
 Navigate to the backend directory:
 
-bash
-Copy code
+
 cd backend
 Create a .env file and add the following environment variables:
 
-bash
-Copy code
+
+
 MONGO_URI=<your-mongo-db-connection-string>
 JWT_SECRET=<your-jwt-secret>
 Install the backend dependencies:
 
-bash
-Copy code
+
+
 npm install
 Run the backend server:
 
-bash
-Copy code
+
 npm run dev
 The backend server will be running on http://localhost:3000.
 
-API Documentation
+## API Documentation
 The API documentation is available via Swagger UI. To view it, open the Swagger UI at the following endpoint:
 
-bash
-Copy code
+
 http://localhost:3000/api-docs
 This UI includes detailed information about all the available API endpoints, request bodies, and expected responses.
 
-Environment Variables
+## Environment Variables
 Create a .env file in the backend folder with the following variables:
 
-bash
-Copy code
-MONGO_URI=<your-mongo-db-connection-string>
-JWT_SECRET=<your-jwt-secret>
-##Conclusion
+
+## Conclusion
 This project demonstrates the ability to manage tasks, implement role-based access control, handle real-time notifications, and design a modular, scalable architecture using MERN stack and TypeScript. The application is built with flexibility in mind, allowing admins and users to efficiently manage tasks and collaborate seamlessly.
 
 
