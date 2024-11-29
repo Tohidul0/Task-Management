@@ -60,7 +60,7 @@ interface RootState {
 }
 
 const Sidebar = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user  } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const location = useLocation();
   const path = location.pathname.split("/")[1];
