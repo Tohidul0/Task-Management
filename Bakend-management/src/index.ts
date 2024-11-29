@@ -23,7 +23,7 @@ connectDB();
 
 
 app.use(cors({
-    origin: "https://zippy-cajeta-255809.netlify.app",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   }));

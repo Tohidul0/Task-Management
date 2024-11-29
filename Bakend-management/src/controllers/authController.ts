@@ -73,7 +73,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.cookie("token", token, { httpOnly: true,
        secure: process.env.NODE_ENV === "production",
        sameSite: "none",
-       domain: process.env.NODE_ENV === "production" ? "https://task-management-1-lecw.onrender.com" : undefined });
+       domain: process.env.NODE_ENV === "production" ? "http://localhost:3000" : undefined });
     
     res.status(200).json({
       token,

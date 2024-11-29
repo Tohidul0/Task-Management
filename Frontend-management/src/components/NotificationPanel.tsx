@@ -75,7 +75,7 @@ const NotificationPanel = () => {
     const fetchNotifications = async () => {
       try {
         const response = await axios.get(
-          `https://task-management-1-lecw.onrender.com/api/notification/${user._id}`,
+          `http://localhost:3000/api/notification/${user._id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const NotificationPanel = () => {
     console.log(item);
     try {
       const response = await axios.put(
-        `https://task-management-1-lecw.onrender.com/api/notification/${item._id}/read/${user._id}`,
+        `http://localhost:3000/api/notification/${item._id}/read/${user._id}`,
         {},
         {
           headers: {

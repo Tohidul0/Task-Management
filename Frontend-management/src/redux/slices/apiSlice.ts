@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API_URI = "https://task-management-1-lecw.onrender.com/api";
+const API_URI = "http://localhost:3000/api";
 
 const baseQuery = fetchBaseQuery({ baseUrl: API_URI });
 

@@ -59,7 +59,7 @@ const Tasks: React.FC = () => {
   const status: string = params?.status || "";
   const fetchUsers = async () => {
     try {
-      const response = await axios.get<{ data: Task[] }>(`https://task-management-1-lecw.onrender.com/api/tasks/allTask/${user._id}`, {
+      const response = await axios.get<{ data: Task[] }>(`http://localhost:3000/api/tasks/allTask/${user._id}`, {
         headers: {
           "Content-Type": "application/json",
         },

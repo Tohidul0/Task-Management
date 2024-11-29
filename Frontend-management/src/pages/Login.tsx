@@ -29,7 +29,7 @@ const Login: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const apiUrl =
-    import.meta.env.REACT_APP_BACKEND_URL || "https://task-management-1-lecw.onrender.com";
+    import.meta.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
 
   const {
     register,
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
     //console.log("Submitted Data:", data);
     try {
       const res = await axios.post<SignInResponse>(
-        `https://task-management-1-lecw.onrender.com/api/auth/login`,
+        `http://localhost:3000/api/auth/login`,
         data,
         {
           headers: { "Content-Type": "application/json" },

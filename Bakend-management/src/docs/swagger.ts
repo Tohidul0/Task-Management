@@ -24,7 +24,7 @@ const swaggerOptions = {
         ],
         servers: [
             {
-                url: "https://task-management-1-lecw.onrender.com/api", // Base URL of your API
+                url: "http://localhost:3000/api", // Base URL of your API
             },
         ],
     },

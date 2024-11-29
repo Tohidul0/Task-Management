@@ -79,7 +79,7 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
         console.log(task._id, "jaaaa")
 
   
-        const response = await axios.put(`https://task-management-1-lecw.onrender.com/api/tasks/${task._id}`, taskup, {
+        const response = await axios.put(`http://localhost:3000/api/tasks/${task._id}`, taskup, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -217,14 +217,14 @@ const AddTask: React.FC<AddTaskProps> = ({ open, setOpen, task }) => {
         stage: stage.toLowerCase(),
         priority: priority.toLowerCase(),
         team,
-        assets,
+        
         activities: [],
         subTasks: [],
         isTrashed: false,
       };
       console.log(task)
 
-      const response = await axios.post("https://task-management-1-lecw.onrender.com/api/tasks/", task, {
+      const response = await axios.post("http://localhost:3000/api/tasks/", task, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -47,7 +47,7 @@ const AddUser: React.FC<AddUserProps> = ({ open, setOpen, userData }) => {
   const handleOnSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       const res = await axios.post(
-        `https://task-management-1-lecw.onrender.com/api/auth/register`,
+        `http://localhost:3000/api/auth/register`,
         data,
         {
           headers: { "Content-Type": "application/json" },
