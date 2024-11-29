@@ -20,7 +20,7 @@ const ICONS = {
   low: <MdKeyboardArrowDown />,
 };
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task ,fetchTasks }) => {
   const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
 
@@ -38,7 +38,7 @@ const TaskCard = ({ task }) => {
             <span className='uppercase'>{task?.priority} Priority</span>
           </div>
 
-          {user && <TaskDialog task={task} />}
+          {user && <TaskDialog task={task}  fetchTasks= {fetchTasks} />}
         </div>
 
         <>

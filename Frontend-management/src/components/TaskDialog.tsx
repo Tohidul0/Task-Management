@@ -11,7 +11,7 @@ import axios from "axios";
 
 import ConfirmatioDialog from "./Dialogs";
 
-const TaskDialog = ({ task }) => {
+const TaskDialog = ({ task, fetchTasks }) => {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -20,8 +20,6 @@ const TaskDialog = ({ task }) => {
   
 
   const navigate = useNavigate();
-
-  const duplicateHandler = () => {};
   const deleteClicks = async() => {
    
     try {
@@ -32,11 +30,12 @@ const TaskDialog = ({ task }) => {
         withCredentials: true, // Include credentials (e.g., cookies) in the request
       });
       console.log('Task deleted successfully:', response.data);
+      navigate("/tasks")
     } catch (error) {
       console.error('Error deleting task:', error);
     }
   };
-  const deleteHandler = () => {};
+  
 
   const items = [
    
@@ -112,6 +111,7 @@ const TaskDialog = ({ task }) => {
         open={openEdit}
         setOpen={setOpenEdit}
         task={task}
+        fetchTasks= {fetchTasks}
         key={new Date().getTime()}
       />
 

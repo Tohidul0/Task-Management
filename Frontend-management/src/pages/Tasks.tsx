@@ -109,7 +109,7 @@ const Tasks: React.FC = () => {
         )}
 
         {selected !== 1 ? (
-          <BoardView tasks={tasks} />
+          <BoardView fetchTasks= {fetchTasks} tasks={tasks} />
         ) : (
           <div className="w-full">
             <Table tasks={tasks} />
