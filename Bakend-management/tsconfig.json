@@ -10,9 +10,7 @@
     "baseUrl": "./",
     "paths": {
       "*": ["node_modules/*", "src/*"]
-    },
-    "typeRoots": ["./node_modules/@types", "./src/types"], // Include custom type definitions
-    "types": ["node", "express"] // Load Express types
+    }
   },
   "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
   "exclude": ["node_modules", "dist"]
